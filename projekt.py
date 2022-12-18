@@ -8,27 +8,58 @@ with db as cursor: #automatsko zapre kurzor
     imeZdravila TEXT,
     pakiranje TEXT, 
     imetnikDovoljenja TEXT,
-    cena INTEGER""")
+    cena INTEGER)""")
     pass
 
-with db as conn:
-    cursor = conn.cursor()
-    with open('zdravila.csv','r',encoding= 'UTF-8') as f:
-        # definiramo header
-        file_reader = csv.DictReader(f,fieldnames= ['nacionalnaSifra', 'imeZdravila', 'pakiranje', 'imetnikDovoljenja', 'cena'], delimiter=';')
-        
-        # se znembimo headerja
-        next(file_reader) 
+def dodaj_v_tabelo():
+    with db as conn:
+        cursor = conn.cursor()
+        with open('zdravila.csv','r',encoding= 'UTF-8') as f:
+            # definiramo header
+            file_reader = csv.DictReader(f,fieldnames= ['nacionalnaSifra', 'imeZdravila', 'pakiranje', 'imetnikDovoljenja', 'cena'], delimiter=';')
+            
+            # se znembimo headerja
+            next(file_reader) 
 
-        #dodamo ostale elemente v bazo
-        for row in file_reader:
-            nacionalnaSifra = row['nacionalnaSifra']
-            imeZdravila = row['imeZdravila']
-            pakiranje = row['pakiranje']
-            imetnikDovoljenja = row['imetnikDovoljenja']
-            cena = row['cena']
-            cursor.execute(''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
-                                VALUES (?,?,?,?,?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena))
+            #dodamo ostale elemente v bazo
+            for row in file_reader:
+                nacionalnaSifra = row['nacionalnaSifra']
+                imeZdravila = row['imeZdravila']
+                pakiranje = row['pakiranje']
+                imetnikDovoljenja = row['imetnikDovoljenja']
+                cena = row['cena']
+                cursor.execute(''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
+                                    VALUES (?,?,?,?,?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena))
+
+def ustvari_tabele(conn):
+    with conn:
+        conn.execute(
+            """CREATE TABLE IF NOT EXIST zdravila 
+            (nacionalnaSifra INTEGER PRIMARY KEY,
+            imeZdravila TEXT,
+            pakiranje TEXT, 
+            imetnikDovoljenja TEXT,
+            cena INTEGER
+            )
+            """
+            )
+    pass
+
+def napolni_nujne_podatke(conn):
+    with conn:
+        conn.execute(
+    ''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
+                                VALUES (?, ?, ?, ?, ?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)          
+                    )
+
+
+
+def pripravi_vse(conn):
+    pass
+
+
+
+
 
 # print(podatki)
 # def napolni_zdravila():
