@@ -61,6 +61,8 @@ def pripravi_vse(conn):
 
 
 
+
+
 # print(podatki)
 # def napolni_zdravila():
 #     with db as cursor:

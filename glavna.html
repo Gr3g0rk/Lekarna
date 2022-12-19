@@ -11,6 +11,13 @@
     %f = open("zdravila.csv", 'r', encoding= "utf8")
     %next(f)
     %for zd in f:
+    <li>
+    <div class="columns">
+        <div class="column">{{ zd[0] }}</div>
+        <div class="column moja-rdeca">{{ zd[1] }}</div>
+        <div class="column">{{ zd[2] }}</div>
+    </div>
+    </li>
         <li> {{ zd }}</li>
     %f.close
     %end
