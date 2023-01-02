@@ -2,14 +2,40 @@ import sqlite3
 import csv 
 
 db = sqlite3.connect('lekarna.sqlite3')
-with db as cursor: #automatsko zapre kurzor
-    cursor.execute("""CREATE TABLE IF NOT EXISTS zdravila 
-    (nacionalnaSifra INTEGER PRIMARY KEY,
-    imeZdravila TEXT,
-    pakiranje TEXT, 
-    imetnikDovoljenja TEXT,
-    cena INTEGER)""")
-    pass
+def ustvari_tabele1():
+    with db as cursor: #automatsko zapre kurzor
+        cursor.execute("""CREATE TABLE IF NOT EXISTS zdravila 
+                        (nacionalnaSifra INTEGER PRIMARY KEY,
+                        imeZdravila TEXT,
+                        pakiranje TEXT, 
+                        imetnikDovoljenja TEXT,
+                        cena INTEGER)""")
+    
+    with db as cursor:
+        cursor.execute("""CREATE TABLE IF NOT EXISTS zdravniki 
+                        (id INTEGER PRIMARY KEY,
+                        ime TEXT,
+                        priimek TEXT)
+                        """)
+    
+    with db as cursor:
+        cursor.execute("""CREATE TABLE IF NOT EXISTS pacienti 
+                        (zzzs INTEGER PRIMARY KEY,
+                        ime TEXT,
+                        priimek TEXT,
+                        datumRojstva TEXT)
+                        """)
+
+    with db as cursor:
+        cursor.execute("""CREATE TABLE IF NOT EXISTS recepti 
+                        (stevilkaRecepta INTEGER PRIMARY KEY,
+                        idZdravnika TEXT,
+                        obnovljiva INTEGER)
+                        """)
+
+
+ustvari_tabele1()
+
 
 def dodaj_v_tabelo():
     with db as conn:
@@ -31,31 +57,31 @@ def dodaj_v_tabelo():
                 cursor.execute(''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
                                     VALUES (?,?,?,?,?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena))
 
-def ustvari_tabele(conn):
-    with conn:
-        conn.execute(
-            """CREATE TABLE IF NOT EXIST zdravila 
-            (nacionalnaSifra INTEGER PRIMARY KEY,
-            imeZdravila TEXT,
-            pakiranje TEXT, 
-            imetnikDovoljenja TEXT,
-            cena INTEGER
-            )
-            """
-            )
-    pass
+# def ustvari_tabele(conn):
+#     with conn:
+#         conn.execute(
+#             """CREATE TABLE IF NOT EXIST zdravila 
+#             (nacionalnaSifra INTEGER PRIMARY KEY,
+#             imeZdravila TEXT,
+#             pakiranje TEXT, 
+#             imetnikDovoljenja TEXT,
+#             cena INTEGER
+#             )
+#             """
+#             )
+    
 
-def napolni_nujne_podatke(conn):
-    with conn:
-        conn.execute(
-    ''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
-                                VALUES (?, ?, ?, ?, ?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)          
-                    )
+# def napolni_nujne_podatke(conn):
+#     with conn:
+#         conn.execute(
+#     ''' INSERT INTO zdravila (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)
+#                                 VALUES (?, ?, ?, ?, ?)''', (nacionalnaSifra, imeZdravila, pakiranje, imetnikDovoljenja, cena)          
+#                     )
 
 
 
-def pripravi_vse(conn):
-    pass
+# def pripravi_vse(conn):
+#     pass
 
 
 
