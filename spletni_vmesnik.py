@@ -5,7 +5,7 @@ glavni_model = model.Model()
 
 
 
-# robi je babe <3
+# robi je babe <3 hihi
 @bottle.route("/static/css/<filename>")
 def serve_static_files_css(filename):
     return bottle.static_file(filename,root="./static/css/") #folder v kerm je css file in ne dejanski file
